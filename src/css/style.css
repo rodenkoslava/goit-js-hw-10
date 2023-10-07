@@ -1,73 +1,72 @@
-.breed-select {
+/* CSS стили для вашего выпадающего списка */
+.breed-select-container {
+    width: 100%;
+    max-width: 300px;
+    /* Установите максимальную ширину по вашему желанию */
+    margin: 0 auto;
+}
+
+/* Стили Slim Select */
+.slim-select {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     padding: 10px;
     font-size: 16px;
-    width: 100%;
-    border-radius: 5px;
-    padding-right: 30px;
-    padding-left: 30px;
-    appearance: none;
 }
 
-.breed-select option {
-    text-align: center;
+/* Стили для выпадающего списка Slim Select */
+.slim-select-dropdown {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    max-height: 200px;
+    /* Установите максимальную высоту списка по вашему желанию */
+    overflow-y: auto;
 }
 
-.breed-select select {
-    padding-left: 20px;
-    padding-right: 0;
+/* Стили для элементов в выпадающем списке Slim Select */
+.slim-select-optgroup,
+.slim-select-option {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
-.loader {
-    display: none;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
+.slim-select-optgroup:hover,
+.slim-select-option:hover {
+    background-color: #f0f0f0;
 }
 
+/* Стили для активного элемента */
+.slim-select-option.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Стили для поискового поля Slim Select */
+.slim-select-search {
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Стили для текста "No results found" */
+.slim-select-search-status {
+    padding: 10px;
+    color: #999;
+}
+
+/* ... */
+
+.loader,
 .error {
     display: none;
     font-size: 18px;
     font-weight: bold;
-    color: #ff0000;
-}
-
-.cat-image {
-    max-width: 500px;
-    height: auto;
-    padding: 40px 30px;
-}
-
-.cat-info-container {
-    margin-left: 20px;
-    background-color: white;
-    padding: 40px 30px;
-}
-
-.loader {
-    position: relative;
-}
-
-.loader:after {
-    content: '';
-    background: pink;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    transform-origin: -16px -32px;
-    animation: rotate 1s linear infinite;
-}
-
-@keyframes rotate {
-
-    0%,
-    100% {
-        transform: rotate(-45deg) translate(-50%, -50%);
-    }
-
-    50% {
-        transform: rotate(-245deg) translate(-50%, -50%);
-    }
+    color: #333;
+    margin-top: 10px;
 }

@@ -5,13 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homework 10</title>
     <link rel="stylesheet" href="css/style.css" />
+    <!-- Подключаем стили Slim Select -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.css"
+    />
   </head>
   <body>
-    <select class="breed-select" multiple></select>
+    <!-- Добавляем контейнер для Slim Select -->
+    <div class="breed-select-container">
+      <!-- Выпадающий список будет заменен Slim Select -->
+      <select class="breed-select" multiple></select>
+    </div>
     <p class="loader">Loading data, please wait...</p>
     <p class="error">Oops! Something went wrong! Try reloading the page!</p>
     <div class="cat-info"></div>
 
-    <script src="app.js" type="module"></script>
+    <!-- Подключаем библиотеку Slim Select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.js"></script>
+    <!-- Подключаем свой JavaScript файл -->
+    <script src="js/app.js" type="module"></script>
   </body>
 </html>
