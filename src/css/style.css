@@ -1,72 +1,97 @@
-/* CSS стили для вашего выпадающего списка */
-.breed-select-container {
-    width: 100%;
-    max-width: 300px;
-    /* Установите максимальную ширину по вашему желанию */
-    margin: 0 auto;
-}
-
-/* Стили Slim Select */
-.slim-select {
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
+.breed-select {
+    padding: 10px;
+    font-size: 16px;
+    width: 25%;
     border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
+    padding-right: 30px;
+    padding-left: 30px;
+    appearance: none;
 }
 
-/* Стили для выпадающего списка Slim Select */
-.slim-select-dropdown {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 0 5px 5px;
-    max-height: 200px;
-    /* Установите максимальную высоту списка по вашему желанию */
-    overflow-y: auto;
+.breed-select option {
+    text-align: center;
 }
 
-/* Стили для элементов в выпадающем списке Slim Select */
-.slim-select-optgroup,
-.slim-select-option {
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+.breed-select select {
+    padding-left: 20px;
+    padding-right: 0;
 }
 
-.slim-select-optgroup:hover,
-.slim-select-option:hover {
-    background-color: #f0f0f0;
-}
-
-/* Стили для активного элемента */
-.slim-select-option.active {
-    background-color: #007bff;
-    color: #fff;
-}
-
-/* Стили для поискового поля Slim Select */
-.slim-select-search {
-    padding: 10px;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    font-size: 16px;
-}
-
-/* Стили для текста "No results found" */
-.slim-select-search-status {
-    padding: 10px;
-    color: #999;
-}
-
-/* ... */
-
-.loader,
-.error {
+.loader {
     display: none;
     font-size: 18px;
     font-weight: bold;
     color: #333;
-    margin-top: 10px;
+}
+
+.error {
+    display: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FF0000;
+}
+
+.cat-image {
+    max-width: 500px;
+    height: auto;
+    padding: 40px 30px;
+}
+
+.cat-info-container {
+    margin-left: 20px;
+    background-color: white;
+    padding: 40px 30px;
+}
+
+.loader {
+    position: relative;
+    width: 40px;
+    height: 60px;
+    animation: heartBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    color: transparent;
+}
+
+.loader:before,
+.loader:after {
+    content: '';
+    background: #FF3D00;
+    width: 40px;
+    height: 60px;
+    border-radius: 50px 50px 0 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: rotate(45deg);
+    transform-origin: 50% 68%;
+    box-shadow: 5px 4px 5px #0004 inset;
+}
+
+.loader:after {
+    transform: rotate(-45deg);
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(0.95);
+    }
+
+    5% {
+        transform: scale(1.1);
+    }
+
+    39% {
+        transform: scale(0.85);
+    }
+
+    45% {
+        transform: scale(1);
+    }
+
+    60% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(0.9);
+    }
 }

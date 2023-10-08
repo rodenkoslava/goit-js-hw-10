@@ -1,73 +1,79 @@
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 import Notiflix from 'notiflix';
-
-// Создаем экземпляр Slim Select
-const select = new SlimSelect({
-  select: '.breed-select', // Выбираем элемент с классом breed-select
-  multiple: true, // Разрешаем выбор нескольких элементов
-  placeholder: 'Select a breed...', // Текст-подсказка
-  searchText: 'No results found', // Текст, если результаты поиска отсутствуют
-  allowDeselect: true, // Разрешаем снятие выбора
-  onChange: selected => {
-    // Выполняем действия при изменении выбора
-    searchCat(selected);
-  },
-});
-
-function populateBreedsSelect() {
-  select.disable(); // Отключаем Slim Select во время загрузки данных
+import { refs } from './refs';
+function breedsList() {
+  refs.loaderRef.style.display = 'block';
+  refs.breedSelectRef.style.display = 'none'; // Приховуємо елемент вводу під час завантаження
+  refs.errorRef.style.display = 'none';
   fetchBreeds()
     .then(breeds => {
-      const options = breeds.map(breed => ({
-        text: breed.name,
-        value: breed.id,
-      }));
-      select.setData(options); // Устанавливаем данные для Slim Select
+      let options = '';
+      breeds.forEach(breed => {
+        options += `<option value="${breed.id}">${breed.name}</option>`;
+      });
+      refs.breedSelectRef.innerHTML = options;
+      refs.breedSelectRef.addEventListener('change', searchCat);
+      refs.breedSelectRef.style.display = 'block'; // Відображаємо елемент вводу після завантаження
     })
     .catch(err => {
+      refs.errorRef.style.display = 'block';
       console.error(err);
-      Notiflix.Notify.failure('An error occurred while loading cat breeds');
+      Notiflix.Notify.failure(
+        'OOOPS! An error occurred while loading cat breeds'
+      );
+      hideBreedSelect(); // Приховуємо елемент вводу при помилці
     })
     .finally(() => {
-      select.enable(); // Включаем Slim Select после загрузки данных
+      refs.loaderRef.style.display = 'none';
     });
 }
-
-function searchCat(selectedBreeds) {
-  if (!selectedBreeds || selectedBreeds.length === 0) {
+function searchCat() {
+  refs.loaderRef.style.display = 'block';
+  refs.errorRef.style.display = 'none';
+  const selectedBreedId = refs.breedSelectRef.value;
+  if (!selectedBreedId) {
+    refs.catInfoRef.innerHTML = '';
+    refs.loaderRef.style.display = 'none';
     return;
   }
-
-  const selectedBreedIds = selectedBreeds.map(breed => breed.value);
-
-  fetchCatByBreed(selectedBreedIds)
+  hideBreedSelect(); // Приховуємо елемент вводу під час пошуку
+  fetchCatByBreed(selectedBreedId)
     .then(catData => {
       if (catData) {
-        // Выводим информацию о коте
         const catInfoTemplate = `
-    <div style="display: flex; align-items: center;">
-        <img src="${catData.url}" alt="Cat of breed ${catData.breeds[0].name}" class="cat-image" style="max-width: 50%; height: auto;">
-        <div class="cat-info-container" style="flex: 1; padding: 20px;">
-            <h2>Cat Information</h2>
-            <p style="font-size: 18px; margin-bottom: 10px;">Name: ${catData.breeds[0].name}</p>
-            <p style="font-size: 16px; margin-bottom: 10px;">Description: ${catData.breeds[0].description}</p>
-            <p style="font-size: 16px;">Temperament: ${catData.breeds[0].temperament}</p>
-        </div>
-    </div>
-`;
-
-        document.querySelector('.cat-info').innerHTML = catInfoTemplate;
+          <div style="display: flex; align-items: center;">
+            <img src="${catData.url}" alt="Cat of breed ${catData.breeds[0].name}" class="cat-image">
+            <div class="cat-info-container">
+              <h2>Cat Information</h2>
+              <p>Name: ${catData.breeds[0].name}</p>
+              <p>Description: ${catData.breeds[0].description}</p>
+              <p>Temperament: ${catData.breeds[0].temperament}</p>
+            </div>
+          </div>`;
+        refs.catInfoRef.innerHTML = catInfoTemplate;
       } else {
-        // Очищаем информацию, если кот не найден
-        document.querySelector('.cat-info').innerHTML = '';
-        Notiflix.Notify.warning('There is no data on this breed of cat');
+        refs.catInfoRef.innerHTML = '';
+        Notiflix.Notify.warning(
+          'WARNING! There is no data on this breed of cat'
+        );
       }
     })
     .catch(err => {
+      refs.errorRef.style.display = 'block';
       console.error(err);
-      Notiflix.Notify.failure('An error occurred while searching for a cat');
+      Notiflix.Notify.failure(
+        'SORRY! An error occurred while searching for a cat'
+      );
+    })
+    .finally(() => {
+      refs.loaderRef.style.display = 'none';
+      showBreedSelect(); // Відновлюємо видимість елементу вводу
     });
 }
-
-// Вызываем функцию для загрузки данных в выпадающий список
-populateBreedsSelect();
+function hideBreedSelect() {
+  refs.breedSelectRef.style.display = 'none';
+}
+function showBreedSelect() {
+  refs.breedSelectRef.style.display = 'block';
+}
+breedsList();
