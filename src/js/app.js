@@ -3,7 +3,7 @@ import Notiflix from 'notiflix';
 import { refs } from './refs';
 function breedsList() {
   refs.loaderRef.style.display = 'block';
-  refs.breedSelectRef.style.display = 'none'; // Приховуємо елемент вводу під час завантаження
+  refs.breedSelectRef.style.display = 'none';
   refs.errorRef.style.display = 'none';
   fetchBreeds()
     .then(breeds => {
@@ -13,15 +13,14 @@ function breedsList() {
       });
       refs.breedSelectRef.innerHTML = options;
       refs.breedSelectRef.addEventListener('change', searchCat);
-      refs.breedSelectRef.style.display = 'block'; // Відображаємо елемент вводу після завантаження
-    })
+      refs.breedSelectRef.style.display = 'block';
     .catch(err => {
       refs.errorRef.style.display = 'block';
       console.error(err);
       Notiflix.Notify.failure(
         'OOOPS! An error occurred while loading cat breeds'
       );
-      hideBreedSelect(); // Приховуємо елемент вводу при помилці
+      hideBreedSelect();
     })
     .finally(() => {
       refs.loaderRef.style.display = 'none';
@@ -36,7 +35,7 @@ function searchCat() {
     refs.loaderRef.style.display = 'none';
     return;
   }
-  hideBreedSelect(); // Приховуємо елемент вводу під час пошуку
+  hideBreedSelect();
   fetchCatByBreed(selectedBreedId)
     .then(catData => {
       if (catData) {
@@ -67,8 +66,7 @@ function searchCat() {
     })
     .finally(() => {
       refs.loaderRef.style.display = 'none';
-      showBreedSelect(); // Відновлюємо видимість елементу вводу
-    });
+      showBreedSelect();
 }
 function hideBreedSelect() {
   refs.breedSelectRef.style.display = 'none';
