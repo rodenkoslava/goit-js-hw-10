@@ -1,10 +1,12 @@
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 import Notiflix from 'notiflix';
 import { refs } from './refs';
+
 function breedsList() {
   refs.loaderRef.style.display = 'block';
   refs.breedSelectRef.style.display = 'none';
   refs.errorRef.style.display = 'none';
+
   fetchBreeds()
     .then(breeds => {
       let options = '';
@@ -14,6 +16,7 @@ function breedsList() {
       refs.breedSelectRef.innerHTML = options;
       refs.breedSelectRef.addEventListener('change', searchCat);
       refs.breedSelectRef.style.display = 'block';
+    })
     .catch(err => {
       refs.errorRef.style.display = 'block';
       console.error(err);
@@ -26,16 +29,20 @@ function breedsList() {
       refs.loaderRef.style.display = 'none';
     });
 }
+
 function searchCat() {
   refs.loaderRef.style.display = 'block';
   refs.errorRef.style.display = 'none';
   const selectedBreedId = refs.breedSelectRef.value;
+
   if (!selectedBreedId) {
     refs.catInfoRef.innerHTML = '';
     refs.loaderRef.style.display = 'none';
     return;
   }
+
   hideBreedSelect();
+
   fetchCatByBreed(selectedBreedId)
     .then(catData => {
       if (catData) {
@@ -61,17 +68,21 @@ function searchCat() {
       refs.errorRef.style.display = 'block';
       console.error(err);
       Notiflix.Notify.failure(
-        'SORRY! An error occurred while searching for a cat'
+        'Oops! Something went wrong! Try reloading the page!'
       );
     })
     .finally(() => {
       refs.loaderRef.style.display = 'none';
       showBreedSelect();
+    });
 }
+
 function hideBreedSelect() {
   refs.breedSelectRef.style.display = 'none';
 }
+
 function showBreedSelect() {
   refs.breedSelectRef.style.display = 'block';
 }
+
 breedsList();
